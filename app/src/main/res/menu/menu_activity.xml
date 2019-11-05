@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/addConductor"
+        android:title="Conductor"
+        android:icon="@drawable/ic_person_add"
+        android:iconTint="@color/colorAccent"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/addRutas"
+        android:title="Rutas"
+        android:icon="@drawable/ic_add_route"
+        android:iconTint="@color/colorAccent"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/salir"
+        android:title="Salir"
+        android:icon="@drawable/ic_power"
+        android:iconTint="@color/colorAccent"
+        app:showAsAction="always"
+        />
+</menu>
