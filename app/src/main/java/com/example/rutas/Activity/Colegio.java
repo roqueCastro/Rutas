@@ -30,7 +30,7 @@ public class Colegio extends AppCompatActivity {
 
     private EditText _emailText,_passwordText;
     private Button _loginButton;
-    String passCorrect, id;
+    String passCorrect, id, acti;
 
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
@@ -42,10 +42,14 @@ public class Colegio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colegio);
 
+        this.setTitle("Logueo");
+
         request = Volley.newRequestQueue(getApplicationContext());
 
         _emailText = (EditText) findViewById(R.id.input_email);
         _passwordText = (EditText) findViewById(R.id.input_password);
+
+        acti = getIntent().getStringExtra("actividad");
 
         passCorrect = "0";
 
@@ -75,7 +79,13 @@ public class Colegio extends AppCompatActivity {
 
     private void cargarWebServiceUser(final String email) {
         _loginButton.setEnabled(false);
-        String url = Utilidades_Request.HTTP + Utilidades_Request.IP + Utilidades_Request.CARPETA + Utilidades_Request.ARCHIVO + email;
+        String url;
+        if (acti.equals("conductor")){
+            url = Utilidades_Request.HTTP + Utilidades_Request.IP + Utilidades_Request.CARPETA + "_ws_conductor_id.php?user=" + email;
+        }else {
+            url = Utilidades_Request.HTTP + Utilidades_Request.IP + Utilidades_Request.CARPETA + Utilidades_Request.ARCHIVO + email;
+        }
+
 
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -89,7 +99,7 @@ public class Colegio extends AppCompatActivity {
                         JSONObject jsonObject = null;
                         jsonObject = json.getJSONObject(i);
 
-                        id = (String) jsonObject.get("id_colegio");
+                        id = (String) jsonObject.get("id");
                         passCorrect= (String) jsonObject.get("pass");
                     }
                 }catch (JSONException e) {
@@ -107,7 +117,12 @@ public class Colegio extends AppCompatActivity {
                     editor.putString("Spass", passCorrect);
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Bienvenido.", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), MainColegio.class));
+                    if (acti.equals("conductor")){
+                        startActivity(new Intent(getApplicationContext(), MainConductor.class));
+                    }else{
+                        startActivity(new Intent(getApplicationContext(), MainColegio.class));
+                    }
+
                     finish();
                 }
 

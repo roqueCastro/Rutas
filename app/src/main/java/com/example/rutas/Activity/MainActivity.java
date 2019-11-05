@@ -29,20 +29,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
+        Intent intent=null;
         switch (v.getId()) {
 
             case R.id.btnColegio:        //"Block SMSs" button pressed
-                startActivity(new Intent(this,Colegio.class));
-                finish();
+                intent = new Intent(this, Colegio.class);
+                intent.putExtra("actividad", "cole");
+
+
                 //Toast.makeText(getApplicationContext(),"Colegio",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnConductor:        //"Block SMSs" button pressed
 //                startActivity(new Intent(this,secret_main.class));
-                Toast.makeText(getApplicationContext(),"Conductor",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, Colegio.class);
+                //Toast.makeText(getApplicationContext(),"Conductor",Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, Colegio.class);
                 intent.putExtra("actividad", "conductor");
-                startActivity(intent);
+
+
                 break;
             case R.id.btnPadreF:        //"Block SMSs" button pressed
 //                startActivity(new Intent(this,secret_main.class));
@@ -50,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
         }
+
+        startActivity(intent);
+
 
     }
 }
