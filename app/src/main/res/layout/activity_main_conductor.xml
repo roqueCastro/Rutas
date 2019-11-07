@@ -1,9 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    android:layout_margin="25dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.MainConductor">
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/btnActivarGps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimary"
+        android:drawableTint="@color/colorAccent"
+        android:textSize="18dp"
+        android:text="  Activar GPS"
+        android:textColor="@color/colorAccent"
+        android:drawableLeft="@drawable/ic_gps"
+         />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="40dp"
+        >
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            >
+            <EditText android:id="@+id/input_cantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:inputType="number"
+                android:hint="Cantidad" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnEnvioCantidad"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:layout_weight="0.5"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:textAllCaps="true"
+            android:visibility="invisible"
+            android:background="@drawable/boton_pulsado"
+            android:drawableLeft="@drawable/ic_send"
+            android:drawableTint="@color/colorAccent"
+            />
+
+    </LinearLayout>
+
+
+</FrameLayout>

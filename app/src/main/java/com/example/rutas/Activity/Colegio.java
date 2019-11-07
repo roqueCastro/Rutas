@@ -30,7 +30,7 @@ public class Colegio extends AppCompatActivity {
 
     private EditText _emailText,_passwordText;
     private Button _loginButton;
-    String passCorrect, id, acti;
+    String passCorrect, id, acti, ruta;
 
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
@@ -101,6 +101,7 @@ public class Colegio extends AppCompatActivity {
 
                         id = (String) jsonObject.get("id");
                         passCorrect= (String) jsonObject.get("pass");
+                        ruta = (String) jsonObject.get("ruta");
                     }
                 }catch (JSONException e) {
                     e.printStackTrace();
@@ -115,6 +116,7 @@ public class Colegio extends AppCompatActivity {
                     editor.putString("Sid", id);
                     editor.putString("Suser", email);
                     editor.putString("Spass", passCorrect);
+                    editor.putString("Sruta", ruta);
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Bienvenido.", Toast.LENGTH_SHORT).show();
                     if (acti.equals("conductor")){

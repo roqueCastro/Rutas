@@ -35,8 +35,10 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     //libreria del bottonfloating personalizado
     implementation 'com.getbase:floatingactionbutton:1.10.1'
-
     //libreria para los input personalizados
     implementation 'com.jakewharton:butterknife:8.8.1'
-
+    //libreria de MAPBOX
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:8.2.1'
+    // Lib location
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-core:1.3.0'
 }
