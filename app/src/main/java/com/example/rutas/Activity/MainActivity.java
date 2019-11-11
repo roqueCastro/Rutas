@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
 
             case R.id.btnColegio:        //"Block SMSs" button pressed
-                intent=null;
                 intent = new Intent(this, Colegio.class);
                 intent.putExtra("actividad", "cole");
 
@@ -43,21 +42,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnConductor:        //"Block SMSs" button pressed
 //                startActivity(new Intent(this,secret_main.class));
                 //Toast.makeText(getApplicationContext(),"Conductor",Toast.LENGTH_SHORT).show();
-                intent=null;
                 intent = new Intent(this, Colegio.class);
                 intent.putExtra("actividad", "conductor");
 
 
                 break;
+
             case R.id.btnPadreF:        //"Block SMSs" button pressed
 //                startActivity(new Intent(this,secret_main.class));
-                Toast.makeText(getApplicationContext(),"Padre",Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, MainPadreFamilia.class);
                 break;
 
         }
 
         startActivity(intent);
         finish();
+        
+
 
     }
 }

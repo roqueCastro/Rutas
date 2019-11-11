@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.MainConductor"></activity>
+        <activity android:name=".Activity.NavigationActivityRoute"></activity>
+        <activity android:name=".Activity.MainPadreFamilia" />
+        <activity android:name=".Activity.MainConductor" />
         <activity android:name=".Activity.RegistroConductorActivity" />
         <activity android:name=".Activity.MainColegio" />
         <activity android:name=".Activity.Conductor" />

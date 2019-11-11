@@ -17,9 +17,11 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -79,6 +81,11 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
     StringRequest stringRequest;
     RequestQueue request;
 
+//    TIEMPO REBUILD
+    Timer timer;
+
+    int gpsEnable = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +99,9 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
         id_conductor = prefe.getString("Sid", "");
         id_ruta = prefe.getString("Sruta", "");
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         cantidad = (EditText) findViewById(R.id.input_cantidad);
         envio_cantidad = (Button) findViewById(R.id.btnEnvioCantidad);
         activar_gps = (Button) findViewById(R.id.btnActivarGps);
@@ -100,14 +110,7 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
             @Override
             public void onClick(View v) {
                 //
-                cantidad.setFocusable(true);
-                cantidad.setEnabled(true);
-                activar_gps.setEnabled(false);
-                activar_gps.setCompoundDrawableTintList(ColorStateList.valueOf(Color.parseColor("#5DE603")));
-                activar_gps.setBackgroundColor(Color.parseColor("#00000000"));
-                activar_gps.setTextColor(Color.parseColor("#00000000"));
-                envio_cantidad.setVisibility(View.VISIBLE);
-                cargarWebServiceRegistroResuRuta();
+                cargarServicioCoordenadas();
             }
         });
 
@@ -126,9 +129,21 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
 
             }
         });
-
+        cargarWebServiceInfo();
         time();
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void cargarServicioCoordenadas() {
+        cantidad.setFocusable(true);
+        cantidad.setEnabled(true);
+        activar_gps.setEnabled(false);
+        activar_gps.setCompoundDrawableTintList(ColorStateList.valueOf(Color.parseColor("#5DE603")));
+        activar_gps.setBackgroundColor(Color.parseColor("#00000000"));
+        activar_gps.setTextColor(Color.parseColor("#00000000"));
+        envio_cantidad.setVisibility(View.VISIBLE);
+        cargarWebServiceRegistroResuRuta();
     }
 
     private boolean validcam() {
@@ -148,6 +163,44 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
     }
 
     /*--------------------------WEB SERVICES ---------------------------*/
+
+    private void cargarWebServiceInfo() {
+
+        String url = Utilidades_Request.HTTP+Utilidades_Request.IP+Utilidades_Request.CARPETA+"_ws_resu-ruta-info_.php?";
+
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onResponse(String response) {
+
+                if(response.trim().equals("000")){
+                    //mensajeAlertaTextViewError("No registro ocurrio un error vuelva a intentarlo. ", 3000);
+                    Toast.makeText(getApplicationContext(), "Error en el sql PDO",Toast.LENGTH_SHORT).show();
+                }else if(response.trim().equals("0")){
+                    //mensajeAlertaTextViewVerdadero("Obra construida registrada con Exito.", 2000);
+                }else {
+                    //enviar coordenada -------
+                    id_resu_ruta = response.trim();
+                    cargarServicioCoordenadas();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //mensajeAlertaTextViewError("Ocurrio un error en el servidor ", 3000);
+                Log.i("Error", error.toString());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> paramentros = new HashMap<>();
+                paramentros.put("id", id_ruta);
+                return paramentros;
+            }
+        };
+        request.add(stringRequest);
+    }
 
     private void cargarWebServiceRegistroResuRuta() {
 
@@ -266,7 +319,11 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
     /*--------------------------HABILITAR PERMISOS Y GPS---------------------------*/
 
     private void gpsEnaDis() {
+        //
+        gpsEnable = 1;
+        //
         manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        //
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             showAlertGPS("ACTIVAR", "GPS");
         } else {
@@ -373,6 +430,7 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
             Log.d("LocationChangeActivity", exception.getLocalizedMessage());
             Toast.makeText(getApplicationContext(), "FALLANDO GPS = " + exception.getLocalizedMessage(),
                     Toast.LENGTH_SHORT).show();
+            gpsEnaDis();
         }
     }
 
@@ -398,6 +456,7 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
     @Override
     public void onExplanationNeeded(List<String> permissionsToExplain) {
         //Toast.makeText(this, "Permiison Expain", Toast.LENGTH_LONG).show();
+
     }
 
     /*LOCATION LISTENER*/
@@ -418,37 +477,64 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
 
     @Override
     public void onProviderDisabled(String provider) {
-        gpsEnaDis();
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home){
+            finish();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
     /*---------TIME SEND-----------------*/
 
     public void time(){
-        Timer timer = new Timer();
-        TimerTask t = new TimerTask() {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+
             @Override
             public void run() {
-                //
-                //Toast.makeText(getApplicationContext(), null,Toast.LENGTH_SHORT).show();
-                if(id_resu_ruta != null && lat != null && lng != null){
-                    cargarWebServiceRegistroCoordenada();
-                    System.out.println("SEND_COOORDENADA");
-                }else {
-                    System.out.println("fallido");
-                }
+                MainConductor.this.runOnUiThread(new Runnable() {
+                    public void run() {
+                        // update UI here
+                        if(id_resu_ruta != null && lat != null && lng != null){
+
+                            cargarWebServiceRegistroCoordenada();
+                            System.out.println("SEND_COOORDENADA");
+                        }else {
+                            System.out.println("fallido");
+                            if (gpsEnable == 1){
+                                gpsEnaDis();
+                                System.out.println("GPS ENABLE");
+                            }
+                        }
+                    }
+                });
             }
-        };
-        timer.scheduleAtFixedRate(t,30000,30000);
+        },0, 30000);
     }
 
     /*-------------------CLASES FINALS DESTRUCCION GPS ACTIVO----------------------*/
+
+    @Override
+    public void onBackPressed() {
+
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
         if (locationEngine != null) {
+            timer.cancel();
             locationEngine.removeLocationUpdates(callback);
             manager.removeUpdates(this);
         }

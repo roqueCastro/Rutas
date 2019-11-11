@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -53,7 +54,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainColegio extends AppCompatActivity {
+public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
     private StringRequest stringRequest;
@@ -68,6 +69,8 @@ public class MainColegio extends AppCompatActivity {
     String id_colegio, txt;
 
     AlertDialog dialogr;
+
+    SwipeRefreshLayout swipeRefresh;
 
 
 
@@ -89,6 +92,15 @@ public class MainColegio extends AppCompatActivity {
 
         context = MainColegio.this;
 
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRC);
+        swipeRefresh.setOnRefreshListener(this);
+        swipeRefresh.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        onRefresh();
+
         com.getbase.floatingactionbutton.FloatingActionButton fab = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.fabPer);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,11 +109,15 @@ public class MainColegio extends AppCompatActivity {
             }
         });
 
-        cargarWebServiceRutasActivas();
         time();
 
         SharedPreferences prefe=getSharedPreferences("datos", Context.MODE_PRIVATE);
         id_colegio = prefe.getString("Sid","");
+    }
+
+    @Override
+    public void onRefresh() {
+        cargarWebServiceRutasActivas();
     }
 
     /*WS*/
@@ -138,7 +154,7 @@ public class MainColegio extends AppCompatActivity {
                         AdapterRutasActivas adapter = new AdapterRutasActivas(rutasas);
                         recyclerRutasActivas.setAdapter(adapter);
                     }
-
+                    swipeRefresh.setRefreshing(false);
                     cargarWebServiceConductor();
 
                 }catch (JSONException e) {
@@ -148,6 +164,7 @@ public class MainColegio extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                swipeRefresh.setRefreshing(false);
                 Toast.makeText(getApplicationContext(), "Error no hay conexion con la base de datos", Toast.LENGTH_SHORT).show();
             }
         });

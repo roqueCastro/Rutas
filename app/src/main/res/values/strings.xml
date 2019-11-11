@@ -4,4 +4,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <string name="key_Token">sk.eyJ1Ijoicm9xdWVjYXN0cm8iLCJhIjoiY2p5ZWw2YmM5MDBzdzNtcGt6bHl5NmduNSJ9.wy8yXgG124yteR6O467CAg</string>
+
 </resources>

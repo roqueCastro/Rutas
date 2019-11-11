@@ -1,8 +1,11 @@
 package com.example.rutas.Activity;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -34,6 +37,8 @@ public class Colegio extends AppCompatActivity {
 
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
+
+    ProgressDialog progreso;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -74,10 +79,29 @@ public class Colegio extends AppCompatActivity {
     }
 
     private void login() {
+        deshabilitarBottonLogin();
         cargarWebServiceUser(_emailText.getText().toString());
     }
 
+    @SuppressLint("ResourceAsColor")
+    private void habilitarBottonLogin(){
+        _loginButton.setBackgroundResource(R.color.colorPrimaryDark);
+        _loginButton.setEnabled(true);
+    }
+
+    private void deshabilitarBottonLogin(){
+        _loginButton.setEnabled(false);
+
+    }
+
+
     private void cargarWebServiceUser(final String email) {
+        progreso= new ProgressDialog(Colegio.this, R.style.AppCompatAlertDialogStyle);
+        progreso.setMessage("Validando Informacion..");
+        progreso.show();
+        progreso.setCanceledOnTouchOutside(false);
+
+
         _loginButton.setEnabled(false);
         String url;
         if (acti.equals("conductor")){
@@ -91,6 +115,7 @@ public class Colegio extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 // Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                progreso.hide();
 
                 JSONArray json = response.optJSONArray("usuarios");
 
@@ -108,7 +133,7 @@ public class Colegio extends AppCompatActivity {
                 }
 //
                 if(!validate()){
-                    _loginButton.setEnabled(true);
+                    habilitarBottonLogin();
                     return;
                 }else{
                     SharedPreferences preferencias=getSharedPreferences("datos",Context.MODE_PRIVATE);
@@ -132,6 +157,8 @@ public class Colegio extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progreso.hide();
+                habilitarBottonLogin();
                 Toast.makeText(getApplicationContext(), "Error no hay conexion con la base de datos", Toast.LENGTH_SHORT).show();
             }
         });

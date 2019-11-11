@@ -7,41 +7,41 @@
     android:paddingLeft="15dp"
     android:orientation="vertical"
     >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:orientation="horizontal"
+      >
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnAddRuta"
-            android:layout_weight="0.5"
-            android:gravity="center"
-            android:drawableLeft="@drawable/ic_add_route"
-            android:drawablePadding="8dp"
-            android:textSize="10dp"
-            android:textStyle="bold"
-            android:textColor="@color/colorAccent"
-            android:text="Rutas"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnAddConductor"
-            android:layout_weight="0.5"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textColor="@color/colorAccent"
-            android:drawableLeft="@drawable/ic_person_add"
-            android:drawableTint="@color/colorAccent"
-            android:drawablePadding="8dp"
-            android:textSize="10dp"
-            android:text="Conductores"
-            />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnAddRuta"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:drawableLeft="@drawable/ic_add_route"
+        android:drawablePadding="8dp"
+        android:textSize="10dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:text="Rutas"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnAddConductor"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:drawableLeft="@drawable/ic_person_add"
+        android:drawableTint="@color/colorAccent"
+        android:drawablePadding="8dp"
+        android:textSize="10dp"
+        android:text="Conductores"
+        />
 
-    </LinearLayout>
+  </LinearLayout>
 
 
 
