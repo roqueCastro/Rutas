@@ -19,17 +19,39 @@
             />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabPer"
+    <!--<RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        fab:backgroundTint="@android:color/background_light"
-        fab:fab_icon="@drawable/ic_person_add"
-        fab:fab_colorPressed="@color/design_default_color_primary_dark"
-        fab:fab_colorNormal="@color/colorPrimaryDark"
-        fab:fab_size="mini"
-        fab:fab_title="Perfil"
-        />
+        android:layout_gravity="bottom"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        >
+
+        <TextView
+            android:id="@+id/text_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="1dp"
+            android:gravity="center"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="1dp"
+            android:textColor="@color/White"
+            android:layout_alignParentRight="true"
+            android:textSize="14sp"
+            android:background="@drawable/bg_noti"
+            android:text="10"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_notit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_margin="18dp"
+            app:srcCompat="@drawable/ic_notifications"
+            android:tint="@color/colorAccent"
+            android:backgroundTint="@color/White"
+            />
+
+    </RelativeLayout>-->
+
 </FrameLayout>

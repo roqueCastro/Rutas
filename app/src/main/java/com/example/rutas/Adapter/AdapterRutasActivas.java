@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.rutas.Activity.MainActivity;
 import com.example.rutas.Activity.MainColegio;
+import com.example.rutas.Activity.SubMainColegio;
 import com.example.rutas.R;
 import com.example.rutas.Utilidades.Utilidades_Request;
 import com.example.rutas.entidades.Rutasa;
@@ -80,11 +81,9 @@ public class AdapterRutasActivas extends RecyclerView.Adapter<AdapterRutasActiva
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "Nombre ruta: " +
-                            rutasa.get(getAdapterPosition()).getNombre_ruta(),
-                            Toast.LENGTH_SHORT).show();
-
-
+                    Intent intent = new Intent(v.getContext(), SubMainColegio.class);
+                    intent.putExtra("id_ruta", rutasa.get(getAdapterPosition()).getId().toString());
+                    v.getContext().startActivity(intent);
                 }
             });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {

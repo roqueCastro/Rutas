@@ -72,8 +72,6 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
 
     SwipeRefreshLayout swipeRefresh;
 
-
-
     Context context;
 
     @Override
@@ -94,22 +92,15 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
 
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRC);
         swipeRefresh.setOnRefreshListener(this);
-        swipeRefresh.setColorSchemeResources(android.R.color.holo_blue_bright,
+        swipeRefresh.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
         onRefresh();
 
-        com.getbase.floatingactionbutton.FloatingActionButton fab = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.fabPer);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showAlertPrincipal("AGREGAR");
-            }
-        });
 
-        time();
 
         SharedPreferences prefe=getSharedPreferences("datos", Context.MODE_PRIVATE);
         id_colegio = prefe.getString("Sid","");
@@ -120,7 +111,7 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
         cargarWebServiceRutasActivas();
     }
 
-    /*WS*/
+    /*------------------------------WS--------------------------------*/
     private void cargarWebServiceRutasActivas() {
         String url = Utilidades_Request.HTTP + Utilidades_Request.IP + Utilidades_Request.CARPETA + "_ws_rutas-activas_.php";
 
@@ -225,7 +216,7 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
                     //mensajeAlertaTextViewError("No registro ocurrio un error vuelva a intentarlo. ", 3000);
                     Toast.makeText(getApplicationContext(), "registro exitoso",Toast.LENGTH_SHORT).show();
                     txt="";
-                    cargarWebServiceRutasActivas();
+                    onRefresh();
                 }else{
                     //mensajeAlertaTextViewVerdadero("Obra construida registrada con Exito.", 2000);
                     //cargarWebServiceActivid(id);
@@ -264,7 +255,7 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
                 if(response.trim().equals("registra")){
                     //mensajeAlertaTextViewError("No registro ocurrio un error vuelva a intentarlo. ", 3000);
                     Toast.makeText(getApplicationContext(), "Eliminado",Toast.LENGTH_SHORT).show();
-                    cargarWebServiceRutasActivas();
+                    onRefresh();
                 }else{
                     //mensajeAlertaTextViewVerdadero("Obra construida registrada con Exito.", 2000);
                     //cargarWebServiceActivid(id);
@@ -290,7 +281,7 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
         request.add(stringRequest);
     }
 
-    /*ALERTING DIALOG*/
+    /*------------------------------ALERTING DIALOG--------------------*/
     private void showAlertPrincipal(final String title) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -468,7 +459,7 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
 
     }
 
-    //ADAPTERS
+    //----------------------------ADAPTERS------------------------------
     private void obtenerListConductore() {
         listaConductores = new ArrayList<String>();
 
@@ -479,19 +470,7 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
 
     }
 
-    /*TIME RETURN WS*/
-    public void time(){
-        Timer timer = new Timer();
-        TimerTask t = new TimerTask() {
-            @Override
-            public void run() {
-                cargarWebServiceRutasActivas();
-                System.out.println("1");
-            }
-        };
-        timer.scheduleAtFixedRate(t,30000,30000);
-    }
-    //
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -21,6 +21,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -78,8 +79,12 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
     Button activar_gps, envio_cantidad;
     EditText cantidad;
 
+//    VAR WEB SERVICES
     StringRequest stringRequest;
     RequestQueue request;
+
+//    DIALOG ALERT
+    AlertDialog dialogr;
 
 //    TIEMPO REBUILD
     Timer timer;
@@ -129,11 +134,56 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
 
             }
         });
+
+        com.getbase.floatingactionbutton.FloatingActionButton fab = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.fabReporte);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertRutas("Reporte un fallo.");
+            }
+        });
+
         cargarWebServiceInfo();
         time();
 
     }
 
+    /*---------------------------ALERTAS---------------------------------*/
+
+    private void showAlertRutas(String title) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        if (title != null) builder.setTitle(title);
+
+        View viewInflated = LayoutInflater.from(context).inflate(R.layout.dialog_add_reporte, null);
+        builder.setView(viewInflated);
+
+        final EditText nombre = (EditText) viewInflated.findViewById(R.id.editDesReporte);
+
+
+        builder.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String nom = nombre.getText().toString().trim();
+
+                if(nom.length() == 0 ) {
+                    //Toast.makeText(getApplicationContext(), "IDConductor: " + condu + " ID_COL: " + id_colegio,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Campos vacio, Llenar la descripcion.", Toast.LENGTH_SHORT).show();
+
+                }else if(id_resu_ruta == null && lat == null && lng == null) {
+                    Toast.makeText(getApplicationContext(), "No tienes la ubicacion..!.", Toast.LENGTH_SHORT).show();
+                }else{
+                    cargarWebServiceRegistroRepote(nom);
+                }
+            }
+        });
+        dialogr = builder.create();
+        dialogr.show();
+
+    }
+
+    /*--------------------------CARGA EL BOTON DE ACTIVAR GPS--------------*/
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void cargarServicioCoordenadas() {
         cantidad.setFocusable(true);
@@ -146,6 +196,7 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
         cargarWebServiceRegistroResuRuta();
     }
 
+    /*-------------------------VALIDA CAMPO DE CANTIDAD-------------------*/
     private boolean validcam() {
         Boolean valid = true;
 
@@ -278,6 +329,37 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
         request.add(stringRequest);
     }
 
+    private void cargarWebServiceRegistroRepote(String des) {
+
+        String url = Utilidades_Request.HTTP+Utilidades_Request.IP+Utilidades_Request.CARPETA+"_ws_registro-varada_.php?";
+
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Toast.makeText(getApplicationContext(), response ,Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //mensajeAlertaTextViewError("Ocurrio un error en el servidor ", 3000);
+                Log.i("Error", error.toString());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> paramentros = new HashMap<>();
+                paramentros.put("lat", lat);
+                paramentros.put("lng", lng);
+                paramentros.put("des", des);
+                paramentros.put("id_resu_ruta", id_resu_ruta);
+                return paramentros;
+            }
+        };
+        request.add(stringRequest);
+    }
+
     private void cargarWebServiceUpdateCantidad() {
 
         String url = Utilidades_Request.HTTP+Utilidades_Request.IP+Utilidades_Request.CARPETA+"_ws_update-resu-ruta_.php?";
@@ -294,6 +376,7 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
                     Toast.makeText(getApplicationContext(), "Ocurrio un error no se pudo Update resultadoruta",Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(getApplicationContext(), "Teminaste..",Toast.LENGTH_SHORT).show();
+                    destruirProcesos();
                     finish();
                 }
             }
@@ -430,7 +513,11 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
             Log.d("LocationChangeActivity", exception.getLocalizedMessage());
             Toast.makeText(getApplicationContext(), "FALLANDO GPS = " + exception.getLocalizedMessage(),
                     Toast.LENGTH_SHORT).show();
-            gpsEnaDis();
+            if (locationEngine != null) {
+                locationEngine.removeLocationUpdates(callback);
+                manager.removeUpdates(MainConductor.this);
+                lat=null;
+            }
         }
     }
 
@@ -477,7 +564,8 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
 
     @Override
     public void onProviderDisabled(String provider) {
-
+        Toast.makeText(getApplicationContext(), "GPS INACTIVO", Toast.LENGTH_SHORT).show();
+        gpsEnaDis();
     }
 
     @Override
@@ -524,6 +612,14 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
 
     /*-------------------CLASES FINALS DESTRUCCION GPS ACTIVO----------------------*/
 
+    private void destruirProcesos() {
+        if (locationEngine != null) {
+            timer.cancel();
+            locationEngine.removeLocationUpdates(callback);
+            manager.removeUpdates(this);
+        }
+    }
+
     @Override
     public void onBackPressed() {
 
@@ -533,12 +629,8 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
     protected void onDestroy() {
         super.onDestroy();
 
-        if (locationEngine != null) {
-            timer.cancel();
-            locationEngine.removeLocationUpdates(callback);
-            manager.removeUpdates(this);
-        }
-    }
+        destruirProcesos();
 
+    }
 
 }

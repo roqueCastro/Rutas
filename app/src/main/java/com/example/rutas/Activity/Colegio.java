@@ -98,8 +98,8 @@ public class Colegio extends AppCompatActivity {
     private void cargarWebServiceUser(final String email) {
         progreso= new ProgressDialog(Colegio.this, R.style.AppCompatAlertDialogStyle);
         progreso.setMessage("Validando Informacion..");
-        progreso.show();
         progreso.setCanceledOnTouchOutside(false);
+        progreso.show();
 
 
         _loginButton.setEnabled(false);

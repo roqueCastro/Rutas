@@ -65,13 +65,14 @@
     </LinearLayout>
 
     <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabPer"
+        android:id="@+id/fabReporte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         fab:backgroundTint="@android:color/background_light"
-        fab:fab_icon="@drawable/ic_person_add"
+        fab:fab_icon="@drawable/ic_do_not"
+        fab:rippleColor="@color/colorPrimaryDark"
         fab:fab_colorPressed="@color/design_default_color_primary_dark"
         fab:fab_colorNormal="@color/Verde_Claro"
         fab:fab_size="mini"
