@@ -6,11 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.rutas.Activity.Colegio;
-import com.example.rutas.Activity.MainPadreFamilia;
 import com.example.rutas.Activity.NavigationActivityRoute;
 import com.example.rutas.R;
 import com.example.rutas.entidades.Ruuta;
@@ -43,6 +41,9 @@ public class AdaterRutasView extends RecyclerView.Adapter<AdaterRutasView.RutasV
         holder.txtNruta.setText(rutas.get(position).getNombre_ruta());
         holder.txtNombre.setText(rutas.get(position).getNombre_conductor());
         holder.txtapellido.setText(rutas.get(position).getFecha_inicio());
+
+        holder.image.setVisibility(View.INVISIBLE);
+        holder.drawable.setImageResource(R.mipmap.ic_ruta_foreground);
     }
 
     @Override
@@ -53,23 +54,26 @@ public class AdaterRutasView extends RecyclerView.Adapter<AdaterRutasView.RutasV
     public class RutasViewHolder extends RecyclerView.ViewHolder{
 
         TextView txtNruta,txtNombre,txtapellido;
+        ImageView image, drawable, imageRoud;
 
         public RutasViewHolder(View itemView) {
             super(itemView);
             txtNruta=itemView.findViewById(R.id.textViewNombreRuta);
             txtNombre=itemView.findViewById(R.id.textViewNombreConductor);
             txtapellido=itemView.findViewById(R.id.textViewApellido);
+            image = itemView.findViewById(R.id.image_cambio);
+            drawable = itemView.findViewById(R.id.image_cambios);
+            imageRoud = itemView.findViewById(R.id.image_drawable);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "id ruta: " +
+                    /*Toast.makeText(v.getContext(), "id ruta: " +
                                     rutas.get(getAdapterPosition()).getNombre_ruta(),
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show();*/
                     Intent intent = new Intent(v.getContext(), NavigationActivityRoute.class);
                     intent.putExtra("ids", rutas.get(getAdapterPosition()).getId_resu_ruta().toString());
                     v.getContext().startActivity(intent);
-                    ((MainPadreFamilia)v.getContext()).finish();
                 }
             });
         }

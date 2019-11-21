@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.rutas.R;
@@ -16,15 +17,21 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnPadre,btnCole,btnCond;
+    ImageButton btnPadre,btnCole,btnCond;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnCole = (Button) findViewById(R.id.btnColegio);
-        btnCond = (Button) findViewById(R.id.btnConductor);
-        btnPadre = (Button) findViewById(R.id.btnPadreF);
+        //titulo action bar
+        this.setTitle("Inicio");
+
+        //quitar action bar
+        getSupportActionBar().hide();
+
+        btnCole = (ImageButton) findViewById(R.id.btnColegio);
+        btnCond = (ImageButton) findViewById(R.id.btnConductor);
+        btnPadre = (ImageButton) findViewById(R.id.btnPadreF);
 
 
         btnPadre.setOnClickListener(this);
@@ -60,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         startActivity(intent);
-        finish();
 
 
     }

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +45,7 @@ public class RegistroConductorActivity extends AppCompatActivity {
     ArrayList<Conductore> conductors = new ArrayList<>();;
 
     EditText _nombre, _apellido, _telefono, _direccion, _emailText, _passwordText, _reEnterPasswordText;
-    Button _signupButton;
+    ImageButton _signupButton;
 
     String name, apellido, direccion, email, mobile, password, reEnterPassword;
 
@@ -52,6 +53,9 @@ public class RegistroConductorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_conductor);
+
+        //titulo action bar
+        this.setTitle("Registro Conductor");
 
         request = Volley.newRequestQueue(getApplicationContext());
 
@@ -66,7 +70,7 @@ public class RegistroConductorActivity extends AppCompatActivity {
         _passwordText = (EditText) findViewById(R.id.input_password);
         _reEnterPasswordText = (EditText) findViewById(R.id.input_reEnterPassword);
 
-        _signupButton = (Button) findViewById(R.id.btn_signup);
+        _signupButton = (ImageButton) findViewById(R.id.btn_signup);
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

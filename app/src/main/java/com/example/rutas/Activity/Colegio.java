@@ -14,6 +14,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -32,8 +33,8 @@ import org.json.JSONObject;
 public class Colegio extends AppCompatActivity {
 
     private EditText _emailText,_passwordText;
-    private Button _loginButton;
-    String passCorrect, id, acti, ruta;
+    private ImageButton _loginButton;
+    String passCorrect, id, acti, ruta, names;
 
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
@@ -47,7 +48,8 @@ public class Colegio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colegio);
 
-        this.setTitle("Logueo");
+        this.setTitle("Iniciar sesión");
+        getSupportActionBar().hide();
 
         request = Volley.newRequestQueue(getApplicationContext());
 
@@ -58,12 +60,13 @@ public class Colegio extends AppCompatActivity {
 
         passCorrect = "0";
 
-        _loginButton =(Button) findViewById(R.id.btn_login);
+        _loginButton =(ImageButton) findViewById(R.id.btn_login);
 
         SharedPreferences prefe=getSharedPreferences("datos", Context.MODE_PRIVATE);
         String id = prefe.getString("Sid","");
         String user = prefe.getString("Suser","");
         String pass = prefe.getString("Spass","");
+        String name = prefe.getString("Sname","");
 
         if((user != "") && (pass != "")){
             _emailText.setText(user);
@@ -126,7 +129,13 @@ public class Colegio extends AppCompatActivity {
 
                         id = (String) jsonObject.get("id");
                         passCorrect= (String) jsonObject.get("pass");
-                        ruta = (String) jsonObject.get("ruta");
+                        if (acti.equals("conductor")){
+                            ruta = (String) jsonObject.get("ruta");
+                        }else {
+                            names = (String) jsonObject.get("name");
+                        }
+
+
                     }
                 }catch (JSONException e) {
                     e.printStackTrace();
@@ -139,6 +148,7 @@ public class Colegio extends AppCompatActivity {
                     SharedPreferences preferencias=getSharedPreferences("datos",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor=preferencias.edit();
                     editor.putString("Sid", id);
+                    editor.putString("Sname", names);
                     editor.putString("Suser", email);
                     editor.putString("Spass", passCorrect);
                     editor.putString("Sruta", ruta);

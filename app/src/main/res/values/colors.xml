@@ -2,11 +2,16 @@
 <resources>
     <color name="colorPrimary">#E3E3E3</color>
     <color name="colorPrimaryDark">#22201E</color>
-    <color name="colorAccent">#2234D9</color>
+    <color name="colorAccent">#241EA8</color>
 
     <color name="White">#FFFFFF</color>
     <color name="Verde_Claro">#5DE603</color>
     <color name="gris">#B2B2B2</color>
+    <color name="gris_claro">#F1F1F1</color>
+
+
+    <color name="verde_baique">#00938c</color>
+    <color name="Azul_baique">#004d60</color>
 
 
 </resources>

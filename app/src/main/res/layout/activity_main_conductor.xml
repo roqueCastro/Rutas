@@ -14,11 +14,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="@color/colorPrimary"
-        android:drawableTint="@color/colorAccent"
+        android:background="@drawable/border_linear_dos"
+        android:drawableTint="@color/Azul_baique"
         android:textSize="18dp"
         android:text="  Activar GPS"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/White"
         android:drawableLeft="@drawable/ic_gps"
          />
 
@@ -43,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
+                android:textColor="@color/Azul_baique"
                 android:inputType="number"
                 android:hint="Cantidad" />
         </android.support.design.widget.TextInputLayout>
@@ -74,7 +75,7 @@
         fab:fab_icon="@drawable/ic_do_not"
         fab:rippleColor="@color/colorPrimaryDark"
         fab:fab_colorPressed="@color/design_default_color_primary_dark"
-        fab:fab_colorNormal="@color/Verde_Claro"
+        fab:fab_colorNormal="@color/Azul_baique"
         fab:fab_size="mini"
         fab:fab_title="Perfil"
         />

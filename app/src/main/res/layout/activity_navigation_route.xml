@@ -46,16 +46,15 @@
 
     <Button
         android:id="@+id/btninicioColegio"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="433dp"
+        android:layout_height="47dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="30dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginRight="8dp"
         android:enabled="false"
         android:text="Casa - Colegio"
-        android:textColor="@color/mapbox_blue"
+        android:textColor="@color/White"
+        android:background="@color/Azul_baique"
         app:layout_constraintBottom_toBottomOf="@+id/mapViewNavi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -65,10 +64,10 @@
         android:id="@+id/mapViewNavi"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        mapbox:layout_constraintBottom_toBottomOf="parent"
+        mapbox:layout_constraintStart_toStartOf="parent"
         mapbox:mapbox_cameraTargetLat="1.967983"
         mapbox:mapbox_cameraTargetLng="-75.921382"
-        mapbox:mapbox_cameraZoom="13"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="36dp" />
+        mapbox:mapbox_cameraZoom="13" />
 
 </android.support.constraint.ConstraintLayout>

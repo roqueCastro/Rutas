@@ -46,6 +46,8 @@ public class MainPadreFamilia extends AppCompatActivity implements  SwipeRefresh
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_padre_familia);
 
+        //titulo action bar
+        this.setTitle("Rutas tiempo real");
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

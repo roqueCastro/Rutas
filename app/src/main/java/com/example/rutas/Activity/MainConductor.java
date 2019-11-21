@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
@@ -89,12 +90,15 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
 //    TIEMPO REBUILD
     Timer timer;
 
+    Resources resources;
+
     int gpsEnable = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_conductor);
+
 
         context = MainConductor.this;
 
@@ -106,6 +110,8 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        resources = context.getResources();
 
         cantidad = (EditText) findViewById(R.id.input_cantidad);
         envio_cantidad = (Button) findViewById(R.id.btnEnvioCantidad);
@@ -189,7 +195,11 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
         cantidad.setFocusable(true);
         cantidad.setEnabled(true);
         activar_gps.setEnabled(false);
-        activar_gps.setCompoundDrawableTintList(ColorStateList.valueOf(Color.parseColor("#5DE603")));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            activar_gps.setCompoundDrawableTintList(resources.getColorStateList(R.color.Verde_Claro, context.getTheme()));
+        }
+
         activar_gps.setBackgroundColor(Color.parseColor("#00000000"));
         activar_gps.setTextColor(Color.parseColor("#00000000"));
         envio_cantidad.setVisibility(View.VISIBLE);
@@ -616,6 +626,9 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
         if (locationEngine != null) {
             timer.cancel();
             locationEngine.removeLocationUpdates(callback);
+            manager.removeUpdates(this);
+        }
+        if (manager != null){
             manager.removeUpdates(this);
         }
     }

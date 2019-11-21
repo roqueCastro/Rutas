@@ -4,21 +4,21 @@
     <item
         android:id="@+id/addConductor"
         android:title="Conductor"
-        android:icon="@drawable/ic_person_add"
+        android:icon="@mipmap/ic_person_add_foreground"
         android:iconTint="@color/colorAccent"
         app:showAsAction="always"
         />
     <item
         android:id="@+id/addRutas"
         android:title="Rutas"
-        android:icon="@drawable/ic_add_route"
+        android:icon="@mipmap/ic_add_ruta_foreground"
         android:iconTint="@color/colorAccent"
         app:showAsAction="always"
         />
     <item
         android:id="@+id/salir"
         android:title="Salir"
-        android:icon="@drawable/ic_power"
+        android:icon="@mipmap/ic_salir_a_foreground"
         android:iconTint="@color/colorAccent"
         app:showAsAction="always"
         />

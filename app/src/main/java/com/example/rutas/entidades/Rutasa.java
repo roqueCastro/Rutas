@@ -9,8 +9,15 @@ public class Rutasa {
     private String nombre_c;
     private String apellido;
     Integer conductor_id;
+    Integer estado;
 
+    public Integer getEstado() {
+        return estado;
+    }
 
+    public void setEstado(Integer estado) {
+        this.estado = estado;
+    }
 
     public Integer getId() {
         return id;

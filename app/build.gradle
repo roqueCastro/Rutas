@@ -49,4 +49,8 @@ dependencies {
     // Lib navigation
     implementation 'com.mapbox.mapboxsdk:mapbox-android-navigation:0.41.0'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-navigation-ui:0.41.0'
+    //Personalizacion de layout
+    implementation 'com.balysv:material-ripple:1.0.2'
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
+
 }

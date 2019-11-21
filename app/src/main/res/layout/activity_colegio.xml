@@ -4,24 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
+    android:background="@color/gris_claro"
     android:layout_height="match_parent"
     tools:context=".Activity.Colegio">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/colegio"
+        android:layout_marginBottom="24dp"
+        android:layout_gravity="center_horizontal"
+        tools:ignore="MissingConstraints" />
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="56dp"
+        android:paddingTop="300dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
         tools:ignore="MissingConstraints">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
-            android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal" />
 
         <!--  Email Label -->
         <android.support.design.widget.TextInputLayout
@@ -33,8 +36,9 @@
             <EditText android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/Azul_baique"
                 android:inputType="textEmailAddress"
-                android:hint="Correo Electrónico" />
+                android:hint="Usuario" />
         </android.support.design.widget.TextInputLayout>
 
         <!--  Password Label -->
@@ -46,20 +50,21 @@
             <EditText android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/Azul_baique"
                 android:inputType="textPassword"
                 android:hint="Contraseña"/>
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.v7.widget.AppCompatButton
+        <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/btn_login"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:background="@color/colorPrimaryDark"
-            android:textColor="@color/White"
-            android:text="INICIAR SESIÓN"/>
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/btniniciarsession"
+            />
 
     </LinearLayout>
 

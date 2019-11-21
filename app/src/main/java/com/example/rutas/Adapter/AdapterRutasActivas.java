@@ -1,17 +1,17 @@
 package com.example.rutas.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +20,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.rutas.Activity.MainActivity;
-import com.example.rutas.Activity.MainColegio;
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.example.rutas.Activity.SubMainColegio;
 import com.example.rutas.R;
 import com.example.rutas.Utilidades.Utilidades_Request;
@@ -34,10 +32,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class AdapterRutasActivas extends RecyclerView.Adapter<AdapterRutasActivas.RutasActivasHolder> {
     int p;
 
     List<Rutasa> rutasa;
+
+    View convertView;
 
     public AdapterRutasActivas(List<Rutasa> rutasa) {
         this.rutasa = rutasa;
@@ -56,11 +57,18 @@ public class AdapterRutasActivas extends RecyclerView.Adapter<AdapterRutasActiva
         return new RutasActivasHolder(vista);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull AdapterRutasActivas.RutasActivasHolder holder, int position) {
         holder.txtNruta.setText(rutasa.get(position).getNombre_ruta());
         holder.txtNombre.setText(rutasa.get(position).getNombre_c());
         holder.txtapellido.setText("Conductor");
+        if (rutasa.get(position).getEstado().equals(1)){
+            holder.image.setVisibility(View.INVISIBLE);
+        }else {
+            holder.drawable.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     @Override
@@ -71,12 +79,15 @@ public class AdapterRutasActivas extends RecyclerView.Adapter<AdapterRutasActiva
     public class RutasActivasHolder extends RecyclerView.ViewHolder{
 
         TextView txtNruta,txtNombre,txtapellido;
+        ImageView image, drawable;
 
         public RutasActivasHolder(View itemView) {
             super(itemView);
             txtNruta=itemView.findViewById(R.id.textViewNombreRuta);
             txtNombre=itemView.findViewById(R.id.textViewNombreConductor);
             txtapellido=itemView.findViewById(R.id.textViewApellido);
+            image = itemView.findViewById(R.id.image_cambio);
+            drawable = itemView.findViewById(R.id.image_cambios);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

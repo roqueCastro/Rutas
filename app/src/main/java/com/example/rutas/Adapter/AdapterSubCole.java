@@ -1,7 +1,5 @@
 package com.example.rutas.Adapter;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +7,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rutas.R;
@@ -43,12 +42,18 @@ public class AdapterSubCole extends RecyclerView.Adapter<AdapterSubCole.SubColeH
         holder.txtNruta.setText(subColes.get(position).getNom_ruta());
         holder.txtNombre.setText(subColes.get(position).getName_conductor());
 
+        holder.image.setVisibility(View.INVISIBLE);
+
+        holder.drawable.setImageResource(R.mipmap.ic_ruta_foreground);
+
         if (subColes.get(position).getEstado().equals("0")){
-            holder.txtapellido.setText(Html.fromHtml("<font color=#4AE300> " + "En linea" + "</font>"));
-            //holder.txtapellido.setTextColor(Color.parseColor("#5DE603"));
-        }else
-            holder.txtapellido.setText("Finalizada");
-            holder.txtapellido.setTextColor(Color.parseColor("#2234D9"));
+            holder.imageRoud.setColorFilter(Color.parseColor("#5DE603"));
+
+        }else{
+
+
+        }
+
     }
 
     @Override
@@ -60,6 +65,7 @@ public class AdapterSubCole extends RecyclerView.Adapter<AdapterSubCole.SubColeH
     public class SubColeHolder extends RecyclerView.ViewHolder {
 
         TextView txtNruta, txtNombre, txtapellido;
+        ImageView image, drawable, imageRoud;
 
         public SubColeHolder(View itemView) {
             super(itemView);
@@ -67,7 +73,9 @@ public class AdapterSubCole extends RecyclerView.Adapter<AdapterSubCole.SubColeH
             txtNruta = itemView.findViewById(R.id.textViewNombreRuta);
             txtNombre = itemView.findViewById(R.id.textViewNombreConductor);
             txtapellido = itemView.findViewById(R.id.textViewApellido);
-
+            image = itemView.findViewById(R.id.image_cambio);
+            drawable = itemView.findViewById(R.id.image_cambios);
+            imageRoud = itemView.findViewById(R.id.image_drawable);
         }
     }
 }

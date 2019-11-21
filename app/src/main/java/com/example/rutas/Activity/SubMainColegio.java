@@ -80,6 +80,8 @@ public class SubMainColegio extends AppCompatActivity implements SwipeRefreshLay
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_main_colegio);
 
+
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -158,6 +160,8 @@ public class SubMainColegio extends AppCompatActivity implements SwipeRefreshLay
                         e.printStackTrace();
                     }
 
+                    //titulo action bar
+                    SubMainColegio.this.setTitle(subColes.get(0).getNom_ruta());
                     //
                     AdapterSubCole adapter = new AdapterSubCole(subColes);
                     recyclerRutasActivas.setAdapter(adapter);
@@ -266,8 +270,8 @@ public class SubMainColegio extends AppCompatActivity implements SwipeRefreshLay
             int minutos = (minutosn- dateStart.getMinutes());
             int m;
             String msj;
-            if(minutos<0){
-                m = minutos*-1;
+            if(minutos < 0){
+                m = minutos * -1;
             }else {
                 m=minutos;
             }

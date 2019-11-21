@@ -4,66 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/inicio"
     tools:context=".Activity.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_margin="15dp"
+        android:layout_margin="20dp"
         android:gravity="center_vertical"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="489dp">
 
-        <Button
+        <ImageButton
             android:id="@+id/btnColegio"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="140dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="30dp"
-            android:background="@color/colorPrimary"
-            android:text="Colegio"
             android:textAllCaps="true"
-            android:textColor="@color/colorAccent"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/btncolegio"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="625dp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnConductor"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
+            android:layout_height="50dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="30dp"
-            android:background="@color/colorPrimary"
-            android:text="Conductor"
             android:textAllCaps="true"
-            android:textColor="@color/colorAccent"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/btnconductor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="338dp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnPadreF"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="30dp"
-            android:background="@color/colorPrimary"
-            android:text="Padre de Familia"
+            android:src="@drawable/btncomunidad"
+            android:backgroundTint="@android:color/transparent"
             android:textAllCaps="true"
             android:textColor="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"

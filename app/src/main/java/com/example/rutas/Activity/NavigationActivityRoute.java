@@ -33,6 +33,7 @@ import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
@@ -113,6 +114,8 @@ public class NavigationActivityRoute extends AppCompatActivity implements OnMapR
     //
    Timer timer;
 
+   int btnActication = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +123,9 @@ public class NavigationActivityRoute extends AppCompatActivity implements OnMapR
 
         Mapbox.getInstance(this, getString(R.string.key_Token));
         setContentView(R.layout.activity_navigation_route);
+
+        //titulo action bar
+        this.setTitle("Ruta en linea");
 
         context = NavigationActivityRoute.this;
 
@@ -158,9 +164,11 @@ public class NavigationActivityRoute extends AppCompatActivity implements OnMapR
     private void obtenerPoint() {
         Style style = mapboxMap.getStyle();
 
-        btnInicio.setEnabled(true);
-        btnInicio.setBackgroundResource(R.color.mapbox_navigation_view_color_list_background);
-        btnInicio.setOnClickListener(this);
+        if (btnActication == 0){
+            btnInicio.setEnabled(true);
+            btnInicio.setBackgroundResource(R.color.mapbox_navigation_view_color_list_background);
+            btnInicio.setOnClickListener(this);
+        }
 
         Double carLat = Double.parseDouble(coordenadas.get(0).getLat());
         Double carLng = Double.parseDouble(coordenadas.get(0).getLng());
@@ -240,6 +248,21 @@ public class NavigationActivityRoute extends AppCompatActivity implements OnMapR
         if (code_get_route == 1){
             getRoute(carro,colegio);
         }
+
+        LatLng posisionMarkerCamera = new LatLng(carLat, carLng);
+        animarCamara(posisionMarkerCamera);
+    }
+
+    private void animarCamara(LatLng posisionMarkerCamera) {
+        CameraPosition position = new CameraPosition.Builder()
+                .target(new LatLng(posisionMarkerCamera)) // Sets the new camera position
+                .zoom(14) // Sets the zoom
+                .bearing(0) // Rotate the camera
+                .tilt(30) // Set the camera tilt
+                .build(); // Creates a CameraPosition from the builder
+
+        mapboxMap.animateCamera(CameraUpdateFactory
+                .newCameraPosition(position), 2000);
     }
 
     private void addImage(String id, int drawableImage) {
@@ -401,6 +424,7 @@ public class NavigationActivityRoute extends AppCompatActivity implements OnMapR
                 btnInicio.setEnabled(false);
                 btnInicio.setBackgroundResource(Color.parseColor("#00000000"));
                 code_get_route = 1;
+                btnActication = 1;
                 break;
         }
     }
@@ -430,8 +454,6 @@ public class NavigationActivityRoute extends AppCompatActivity implements OnMapR
 
         if (id == android.R.id.home){
             finish();
-            Intent intent = new Intent(context, MainActivity.class);
-            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

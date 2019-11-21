@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="@color/Azul_baique"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.LinearLayoutCompat
@@ -14,6 +15,7 @@
             android:id="@+id/textViewFechaI"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/White"
             android:layout_gravity="right"
             android:gravity="right"
             android:textStyle="normal"
@@ -44,6 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:textColor="@color/White"
                 android:gravity="center_horizontal"
                 android:textStyle="bold"
                 android:textSize="23dp"
@@ -55,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
+                android:textColor="@color/White"
                 android:textStyle="italic"
                 android:textSize="20dp"
                 android:text="La gaitana camenzo"
@@ -74,6 +78,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:textStyle="bold"
+                android:textColor="@color/White"
                 android:textSize="23dp"
                 android:text="Conductor"
                 />
@@ -84,6 +89,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:textStyle="italic"
+                android:textColor="@color/White"
                 android:textSize="20dp"
                 android:text="Lorena castro garzon"
                 />
@@ -101,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
+                android:textColor="@color/White"
                 android:textStyle="bold"
                 android:textSize="23dp"
                 android:text="N° PASAJEROS"
@@ -111,6 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
+                android:textColor="@color/White"
                 android:textStyle="italic"
                 android:textSize="20dp"
                 android:text="0"
@@ -129,6 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
+                android:textColor="@color/White"
                 android:textStyle="bold"
                 android:textSize="23dp"
                 android:text="DURACION"
@@ -140,6 +149,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:textStyle="italic"
+                android:textColor="@color/White"
                 android:textSize="20dp"
                 android:text="20 minutos"
                 />
@@ -158,6 +168,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:textStyle="bold"
+                android:textColor="@color/White"
                 android:textSize="23dp"
                 android:text="TELEFONO"
                 />
@@ -168,6 +179,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:textStyle="italic"
+                android:textColor="@color/White"
                 android:textSize="20dp"
                 android:text="3215569231"
                 />

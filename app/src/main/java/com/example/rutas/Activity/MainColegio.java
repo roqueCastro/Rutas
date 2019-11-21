@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,10 +28,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -66,7 +71,7 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
     ArrayList<String> listaConductores;
 
     String condu ="0";
-    String id_colegio, txt;
+    String id_colegio, txt, name_cole;
 
     AlertDialog dialogr;
 
@@ -74,10 +79,14 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
 
     Context context;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_colegio);
+
+        //titulo action bar
+        this.setTitle("Panel de control");
 
         rutasas = new ArrayList<>();
         conductors = new ArrayList<>();
@@ -104,6 +113,7 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
 
         SharedPreferences prefe=getSharedPreferences("datos", Context.MODE_PRIVATE);
         id_colegio = prefe.getString("Sid","");
+        name_cole = prefe.getString("Sname","");
     }
 
     @Override
@@ -136,6 +146,7 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
                             rutasa.setNombre_ruta(jsonObject.optString("ruta"));
                             rutasa.setNombre_c(jsonObject.optString("conductor_name"));
                             rutasa.setConductor_id(jsonObject.optInt("conductor_id"));
+                            rutasa.setEstado(jsonObject.optInt("estado"));
                             rutasas.add(rutasa);
                         }
 
@@ -301,7 +312,7 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
         ruta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAlertRutas("RUTAS");
+                showAlertRutas("RUTAS", "");
                 dialog.cancel();
             }
         });
@@ -317,11 +328,12 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
         dialog.show();
     }
 
-    private void showAlertRutas(String title) {
+    private void showAlertRutas(String title, String message) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         if (title != null) builder.setTitle(title);
+        if (message != null) builder.setMessage(message);
 
         View viewInflated = LayoutInflater.from(context).inflate(R.layout.dialog_add_ruta, null);
         builder.setView(viewInflated);
@@ -430,15 +442,18 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
                     //
                     int condu_vali=0;
                     int name_route=0;
+
+                    String ruta_name = message + nom;
                     //
                     for(int i=0; i<rutasas.size(); i++){
-                        if ( rutasas.get(i).getConductor_id().toString().equals(condu)){
+                        if ( rutasas.get(i).getConductor_id().toString().equals(condu) && rutasas.get(i).getEstado().equals(0)){
                             condu_vali=1;
                         }
                     }
 
                     for(int a=0; a<rutasas.size(); a++){
-                        if ( rutasas.get(a).getNombre_ruta().equals(nom)){
+
+                        if ( rutasas.get(a).getNombre_ruta().equals(ruta_name) && rutasas.get(a).getEstado().equals(0)){
                             name_route=1;
                         }
                     }
@@ -448,7 +463,8 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
                     }else if(condu_vali==1){
                         Toast.makeText(getApplicationContext(), "Este conductor ya tiene ruta asignada.", Toast.LENGTH_SHORT).show();
                     }else{
-                        cargarWebServiceRegistroRuta(id_colegio, condu, nom);
+
+                        cargarWebServiceRegistroRuta(id_colegio, condu, ruta_name);
                     }
 
                 }
@@ -478,11 +494,16 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
 
         Drawable yourdrawable = menu.getItem(0).getIcon();
         yourdrawable.mutate();
-        yourdrawable.setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+        yourdrawable.setColorFilter(getResources().getColor(R.color.White), PorterDuff.Mode.SRC_IN);
+
+
+        Drawable yourdrawable2 = menu.getItem(1).getIcon();
+        yourdrawable2.mutate();
+        yourdrawable2.setColorFilter(getResources().getColor(R.color.White), PorterDuff.Mode.SRC_IN);
 
         Drawable dos = menu.getItem(2).getIcon();
         dos.mutate();
-        dos.setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+        dos.setColorFilter(getResources().getColor(R.color.White), PorterDuff.Mode.SRC_IN);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -492,7 +513,8 @@ public class MainColegio extends AppCompatActivity implements SwipeRefreshLayout
         switch (item.getItemId()){
             case R.id.addRutas:
                 // startActivity(getIntent());
-                showAlertRutas("RUTAS");
+                String cole_name = name_cole + " - ";
+                showAlertRutas("RUTAS", cole_name);
                 break;
             case R.id.addConductor:
                 startActivity(new Intent(getApplicationContext(), RegistroConductorActivity.class));
