@@ -617,7 +617,7 @@ public class MainConductor extends AppCompatActivity implements PermissionsListe
                     }
                 });
             }
-        },0, 30000);
+        },0, 10000);
     }
 
     /*-------------------CLASES FINALS DESTRUCCION GPS ACTIVO----------------------*/

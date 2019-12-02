@@ -13,7 +13,11 @@ import android.widget.TextView;
 import com.example.rutas.R;
 import com.example.rutas.entidades.SubCole;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AdapterSubCole extends RecyclerView.Adapter<AdapterSubCole.SubColeHolder> {
 
@@ -39,8 +43,20 @@ public class AdapterSubCole extends RecyclerView.Adapter<AdapterSubCole.SubColeH
     @Override
     public void onBindViewHolder(@NonNull AdapterSubCole.SubColeHolder holder, int position) {
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+        String strDateFormat = "hh:mm a"; // El formato de fecha está especificado
+        SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
+        Date fechaIni = null;
+        
+        try {
+            fechaIni = dateFormat.parse(subColes.get(position).getFecha_inicio());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         holder.txtNruta.setText(subColes.get(position).getNom_ruta());
         holder.txtNombre.setText(subColes.get(position).getName_conductor());
+        holder.txtapellido.setText(objSDF.format(fechaIni));
 
         holder.image.setVisibility(View.INVISIBLE);
 
@@ -48,7 +64,6 @@ public class AdapterSubCole extends RecyclerView.Adapter<AdapterSubCole.SubColeH
 
         if (subColes.get(position).getEstado().equals("0")){
             holder.imageRoud.setColorFilter(Color.parseColor("#5DE603"));
-
         }else{
 
 

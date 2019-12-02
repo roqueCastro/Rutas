@@ -288,13 +288,16 @@ public class SubMainColegio extends AppCompatActivity implements SwipeRefreshLay
             String MES[] = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
 
             // Dias de la semana
-            String DIA[] = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
+            String DIA[] = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
 
             String strDateFormat = "yyyy hh:mm a"; // El formato de fecha está especificado
             SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
 
-            String fechaview  = DIA[dateEnd.getDay()-1] + " " + dateEnd.getDate() + " de " + MES[dateEnd.getMonth()-1]
+
+
+            String fechaview  = DIA[dateEnd.getDay()] + " " + dateEnd.getDate() + " de " + MES[dateEnd.getMonth()]
                     + " del " +  objSDF.format(dateEnd);
+
 
             fecha.setText(fechaview);
             nombre_ruta.setText(subColes.get(position).getNom_ruta());

@@ -13,7 +13,11 @@ import com.example.rutas.Activity.NavigationActivityRoute;
 import com.example.rutas.R;
 import com.example.rutas.entidades.Ruuta;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AdaterRutasView extends RecyclerView.Adapter<AdaterRutasView.RutasViewHolder> {
 
@@ -38,9 +42,21 @@ public class AdaterRutasView extends RecyclerView.Adapter<AdaterRutasView.RutasV
 
     @Override
     public void onBindViewHolder(@NonNull AdaterRutasView.RutasViewHolder holder, int position) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss", Locale.getDefault());
+        String strDateFormat = "hh:mm a"; // El formato de fecha está especificado
+        SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
+        Date fechaIni = null;
+
+        try {
+            fechaIni = dateFormat.parse(rutas.get(position).getFecha_inicio());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         holder.txtNruta.setText(rutas.get(position).getNombre_ruta());
         holder.txtNombre.setText(rutas.get(position).getNombre_conductor());
-        holder.txtapellido.setText(rutas.get(position).getFecha_inicio());
+        holder.txtapellido.setText(objSDF.format(fechaIni));
 
         holder.image.setVisibility(View.INVISIBLE);
         holder.drawable.setImageResource(R.mipmap.ic_ruta_foreground);

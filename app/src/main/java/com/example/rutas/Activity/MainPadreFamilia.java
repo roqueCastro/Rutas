@@ -1,6 +1,7 @@
 package com.example.rutas.Activity;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +9,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.animation.LinearInterpolator;
 import android.widget.Toast;
 
+import com.agrawalsuneet.dotsloader.loaders.LazyLoader;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -40,6 +43,7 @@ public class MainPadreFamilia extends AppCompatActivity implements  SwipeRefresh
     ArrayList<Ruuta> rutas;
 
     RecyclerView recyclerRutasActivas;
+    LazyLoader  lazyLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,19 @@ public class MainPadreFamilia extends AppCompatActivity implements  SwipeRefresh
         request = Volley.newRequestQueue(getApplicationContext());
 
         rutas = new ArrayList<>();
+
+        lazyLoader = (LazyLoader) findViewById(R.id.loaders);
+
+        LazyLoader loader = new LazyLoader(this, 30, 20, ContextCompat.getColor(this, R.color.loader_selected),
+                ContextCompat.getColor(this, R.color.loader_selected),
+                ContextCompat.getColor(this, R.color.loader_selected));
+        loader.setAnimDuration(100);
+        loader.setFirstDelayDuration(100);
+        loader.setSecondDelayDuration(200);
+        loader.setInterpolator(new LinearInterpolator());
+
+        lazyLoader.addView(loader);
+
 
         recyclerRutasActivas= (RecyclerView) findViewById(R.id.idRecyclerView_rutasV);
         recyclerRutasActivas.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
@@ -78,7 +95,7 @@ public class MainPadreFamilia extends AppCompatActivity implements  SwipeRefresh
             @Override
             public void onResponse(JSONObject response) {
                 // Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
-
+                lazyLoader.removeAllViews();
 
                 JSONArray json = response.optJSONArray("rutas_view");
                 Ruuta ruuta = null;
@@ -116,6 +133,10 @@ public class MainPadreFamilia extends AppCompatActivity implements  SwipeRefresh
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), "Error no hay conexion con la base de datos", Toast.LENGTH_SHORT).show();
+                if (lazyLoader != null){
+                    lazyLoader.removeAllViews();
+                }
+
                 swipeRefresh.setRefreshing(false);
             }
         });

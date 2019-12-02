@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.0"
     defaultConfig {
         applicationId "com.example.rutas"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -52,5 +52,6 @@ dependencies {
     //Personalizacion de layout
     implementation 'com.balysv:material-ripple:1.0.2'
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
-
+    //RE LOADER
+    implementation 'com.agrawalsuneet.androidlibs:dotsloader:1.4'
 }

@@ -6,15 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".Activity.MainPadreFamilia">
 
+    <com.agrawalsuneet.dotsloader.loaders.LazyLoader
+        android:id="@+id/loaders"
+        android:layout_width="327dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        app:lazyloader_animDur="800"
+        app:lazyloader_dotsDist="10dp"
+        app:lazyloader_dotsRadius="16dp"
+        app:lazyloader_firstDelayDur="150"
+        app:lazyloader_firstDotColor="@color/Azul_baique"
+        app:lazyloader_interpolator="@android:anim/decelerate_interpolator"
+        app:lazyloader_secondDelayDur="300"
+        app:lazyloader_secondDotColor="@color/verde_baique"
+        app:lazyloader_thirdDotColor="@color/White" />
+
+
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeR"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/idRecyclerView_rutasV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints" />
+
     </android.support.v4.widget.SwipeRefreshLayout>
+
 </FrameLayout>
