@@ -1,5 +1,7 @@
 package com.example.rutas.Activity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,6 +50,8 @@ public class RegistroConductorActivity extends AppCompatActivity {
     ImageButton _signupButton;
 
     String name, apellido, direccion, email, mobile, password, reEnterPassword;
+
+    ProgressDialog progreso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +142,10 @@ public class RegistroConductorActivity extends AppCompatActivity {
 
     private void cargarWebServiceRegistroConductor(final String nom, final String ape, final String tel, final String dir, final String usu, final String pas) {
 
+        progreso= new ProgressDialog(RegistroConductorActivity.this, R.style.AppCompatAlertDialogStyle);
+        progreso.setMessage("Registrando conductor..");
+        progreso.setCanceledOnTouchOutside(false);
+        progreso.show();
         _signupButton.setEnabled(false);
 
         String url = Utilidades_Request.HTTP+Utilidades_Request.IP+Utilidades_Request.CARPETA+"_ws_registro-conductor_.php?";
@@ -145,6 +153,8 @@ public class RegistroConductorActivity extends AppCompatActivity {
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
+                progreso.hide();
 
                 if(response.trim().equals("registra")){
                     //mensajeAlertaTextViewError("No registro ocurrio un error vuelva a intentarlo. ", 3000);
@@ -162,6 +172,7 @@ public class RegistroConductorActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //mensajeAlertaTextViewError("Ocurrio un error en el servidor ", 3000);
+                progreso.hide();
                 _signupButton.setEnabled(true);
                 Log.i("Error", error.toString());
             }
@@ -263,8 +274,15 @@ public class RegistroConductorActivity extends AppCompatActivity {
 
         if (id == android.R.id.home){
             finish();
+            Intent intent = new Intent(this, MainColegio.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

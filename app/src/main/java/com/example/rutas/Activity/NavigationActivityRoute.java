@@ -1,6 +1,7 @@
 package com.example.rutas.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -115,6 +116,9 @@ public class NavigationActivityRoute extends AppCompatActivity implements OnMapR
    Timer timer;
 
    int btnActication = 0;
+
+   ProgressDialog progreso;
+   int progres = 0;
 
 
     @Override
@@ -306,7 +310,7 @@ public class NavigationActivityRoute extends AppCompatActivity implements OnMapR
 
                     @Override
                     public void onFailure(Call<DirectionsResponse> call, Throwable t) {
-                        System.out.println("Error " + t.getMessage());
+                        System.out.println("ERROR DE CREAR NAVEGACCION.. -> " + t.getMessage());
                     }
                 });
     }
@@ -320,8 +324,10 @@ public class NavigationActivityRoute extends AppCompatActivity implements OnMapR
 
         String msjDistancia, msjDuracion;
 
+
         Double EnDistancia = Double.parseDouble(distancia);
-        Double EnDuracion = Double.parseDouble(numDuracion);
+        //Double EnDuracion = Double.parseDouble(numDuracion); //Error presentado
+        Double EnDuracion = dura; //SOlUCCION
 
         if(EnDistancia > 1000){
             Double d = EnDistancia/1000;
@@ -360,6 +366,7 @@ public class NavigationActivityRoute extends AppCompatActivity implements OnMapR
     /*------------WS WEB-------------------------------------*/
 
     private void cargarWebServiceUser(final String id) {
+        progresoActivando(0);
 
         String url = Utilidades_Request.HTTP + Utilidades_Request.IP + Utilidades_Request.CARPETA + "_ws_rutas-coor_.php?id=" + id;
 
@@ -367,6 +374,9 @@ public class NavigationActivityRoute extends AppCompatActivity implements OnMapR
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+
+                progresoActivando(1);
+
                 // Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
                 JSONArray json = response.optJSONArray("coor");
                 Coordenada coordenada = null;
@@ -406,10 +416,28 @@ public class NavigationActivityRoute extends AppCompatActivity implements OnMapR
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progresoActivando(1);
                 Toast.makeText(getApplicationContext(), "Error no hay conexion con la base de datos", Toast.LENGTH_SHORT).show();
             }
         });
         request.add(jsonObjectRequest);
+    }
+
+    private void progresoActivando(int i) {
+        if (i == 0){
+            if (progres==0){
+                progreso= new ProgressDialog(NavigationActivityRoute.this, R.style.AppCompatAlertDialogStyle);
+                progreso.setMessage("Cargando..");
+                progreso.setCanceledOnTouchOutside(false);
+                progreso.show();
+                progres=1;
+            }
+
+        }else{
+            if (progreso.isShowing()){
+                progreso.hide();
+            }
+        }
     }
 
     /*------------------------------------------------*/

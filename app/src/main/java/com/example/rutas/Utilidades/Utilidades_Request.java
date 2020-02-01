@@ -1,9 +1,10 @@
 package com.example.rutas.Utilidades;
 
 public class Utilidades_Request  {
-    public static final String HTTP = "https://";
-//    public static final String HTTP = "http://";
-    public static final String IP = "sisottsas.com/";
+//    public static final String HTTP = "https://";
+    public static final String HTTP = "http://";
+//    public static final String IP = "sisottsas.com/";
+    public static final String IP = "pruebadisenorouqe.000webhostapp.com/";
 //    public static final String IP = "192.168.12.69/";
 //    public static final String IP = "10.97.129.162/";
 //    public static final String IP = "192.168.100.69/";

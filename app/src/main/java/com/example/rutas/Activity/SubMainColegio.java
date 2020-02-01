@@ -264,27 +264,53 @@ public class SubMainColegio extends AppCompatActivity implements SwipeRefreshLay
 
             Date dateEnd = dateFormat.parse(subColes.get(position).getFecha_fin());
 
+
+            long diferencia = dateEnd.getTime() - dateStart.getTime();
+
+
+            long segsMilli = 1000;
+            long minsMilli = segsMilli * 60;
+            long horasMilli = minsMilli * 60;
+            long diasMilli = horasMilli * 24;
+
+            long diasTranscurridos = diferencia / diasMilli;
+            diferencia = diferencia % diasMilli;
+
+            long horasTranscurridos = diferencia / horasMilli;
+            diferencia = diferencia % horasMilli;
+
+            long minutosTranscurridos = diferencia / minsMilli;
+            diferencia = diferencia % minsMilli;
+
+            long segsTranscurridos = diferencia / segsMilli;
+
+            String fechaentredos =  "diasTranscurridos: " + diasTranscurridos + " , horasTranscurridos: " + horasTranscurridos +
+                    " , minutosTranscurridos: " + minutosTranscurridos + " , segsTranscurridos: " + segsTranscurridos;
+
+            System.out.println(fechaentredos);
+
             /*--------------------Duracion------------------------*/
-            int horas = (dateEnd.getHours() - dateStart.getHours());
-            int minutosn = (60 - dateEnd.getMinutes());
-            int minutos = (minutosn- dateStart.getMinutes());
-            int m;
-            String msj;
-            if(minutos < 0){
-                m = minutos * -1;
-            }else {
-                m=minutos;
-            }
+
 
             String hourr;
-            if (horas <= 1){
-                hourr = " Hora, ";
-            }else{
-                hourr=" Horas, ";
-            }
-            msj = horas + hourr + m + " Minutos";
+            String msj = "";
 
-            /*--------------------Fecha VIew Principal-----------*/
+
+            if (diasTranscurridos > 0){
+                msj += diasTranscurridos + " Dias";
+            }
+            if (horasTranscurridos > 0){
+                if (horasTranscurridos >= 2){
+                    hourr = " Horas, ";
+                }else{
+                    hourr=" Hora, ";
+                }
+                msj += horasTranscurridos + hourr;
+            }
+            msj += minutosTranscurridos + " Minutos";
+
+
+            //*--------------------Fecha VIew Principal-----------*//*
             String MES[] = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
 
             // Dias de la semana
